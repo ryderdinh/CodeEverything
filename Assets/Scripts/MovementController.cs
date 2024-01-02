@@ -3,14 +3,16 @@ using UnityEngine.InputSystem;
 
 public class MovementController : MonoBehaviour
 {
-    [SerializeField] private int speed;
     [SerializeField] [Range(1, 10)] private float acceleration;
+    [SerializeField] private int speed;
+    public Transform wallCheckpoint;
 
     public LayerMask wallLayer;
-    public Transform wallCheckpoint;
     private bool btnPressed;
     private bool isWallTouch;
     private Rigidbody2D rb;
+
+    private Vector2 relativeTransform;
     private float speedMultiplier;
 
     private void Awake()
@@ -18,20 +20,37 @@ public class MovementController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    private void Start()
+    {
+        UpdateRelativeTransform();
+    }
+
+
     private void FixedUpdate()
     {
         UpdateSpeedMultiplier();
-        var targetSpeed = speed * speedMultiplier;
+        var targetSpeed = speed * speedMultiplier * relativeTransform.x;
         rb.velocity = new Vector2(targetSpeed, rb.velocity.y);
 
-        isWallTouch = Physics2D.OverlapBox(wallCheckpoint.position, new Vector2(0.06f, 1.61f), 0, wallLayer);
+        isWallTouch = Physics2D.OverlapBox(wallCheckpoint.position, new Vector2(0.06f, 0.7f), 0, wallLayer);
 
         if (isWallTouch) Flip();
     }
 
+    // private void OnDrawGizmos()
+    // {
+    //     Gizmos.DrawCube(wallCheckpoint.position, new Vector2(0.04f, f1));
+    // }
+
     public void Flip()
     {
         transform.Rotate(0, 180, 0);
+        UpdateRelativeTransform();
+    }
+
+    private void UpdateRelativeTransform()
+    {
+        relativeTransform = transform.InverseTransformVector(Vector3.one);
     }
 
     public void Move(InputAction.CallbackContext value)
