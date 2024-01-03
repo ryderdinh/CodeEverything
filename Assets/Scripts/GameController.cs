@@ -4,8 +4,8 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     private CameraController cameraController;
+    private Vector2 checkpointPos;
     private Rigidbody2D playerRb;
-    private Vector2 startPos;
 
     private void Awake()
     {
@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        startPos = transform.position;
+        checkpointPos = transform.position;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -37,8 +37,13 @@ public class GameController : MonoBehaviour
         playerRb.velocity = Vector2.zero;
         transform.localScale = Vector3.zero;
         yield return new WaitForSeconds(duration);
-        transform.position = startPos;
+        transform.position = checkpointPos;
         transform.localScale = Vector3.one;
         playerRb.simulated = true;
+    }
+
+    public void UpdateCheckpoint(Vector2 pos)
+    {
+        checkpointPos = pos;
     }
 }
