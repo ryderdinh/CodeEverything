@@ -5,18 +5,18 @@ public class MovementController : MonoBehaviour
 {
     [SerializeField] [Range(1, 10)] private float acceleration;
     [SerializeField] private int speed;
+
     public Transform wallCheckpoint;
-
     public LayerMask wallLayer;
-
     public bool isOnPlatform;
     public Rigidbody2D platformRb;
+    public ParticleController particleController;
     private bool btnPressed;
     private bool isWallTouch;
     private Rigidbody2D rb;
-
     private Vector2 relativeTransform;
     private float speedMultiplier;
+
 
     private void Awake()
     {
@@ -52,6 +52,7 @@ public class MovementController : MonoBehaviour
 
     public void Flip()
     {
+        particleController.PlayTouchParticle(wallCheckpoint.position);
         transform.Rotate(0, 180, 0);
         UpdateRelativeTransform();
     }
