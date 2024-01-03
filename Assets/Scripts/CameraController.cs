@@ -5,17 +5,20 @@ public class CameraController : MonoBehaviour
     [Range(0, 1)] public float smoothTime;
     public Vector3 positionOffset;
 
-    [Header("Axis Limitation")] public Vector2 xLimit;
+    [Header("Axis Limitation")]
+    public Vector2 xLimit;
 
     public Vector2 yLimit;
+
+    public Animation anim;
 
     private Transform target;
     private Vector3 velocity = Vector3.zero;
 
-
     private void Awake()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        anim = GetComponent<Animation>();
     }
 
     private void LateUpdate()
