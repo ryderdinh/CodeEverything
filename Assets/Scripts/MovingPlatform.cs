@@ -14,6 +14,7 @@ public class MovingPlatform : MonoBehaviour
     private Rigidbody2D rb;
     private Vector3 targetPos;
 
+
     private void Awake()
     {
         movementController = GameObject.FindGameObjectWithTag("Player").GetComponent<MovementController>();
@@ -45,15 +46,21 @@ public class MovingPlatform : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        movementController.isOnPlatform = true;
-        movementController.platformRb = rb;
-        playerRb.gravityScale *= 50;
+        if (other.CompareTag("Player"))
+        {
+            movementController.isOnPlatform = true;
+            movementController.platformRb = rb;
+            playerRb.gravityScale *= 50;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        movementController.isOnPlatform = false;
-        playerRb.gravityScale /= 50;
+        if (other.CompareTag("Player"))
+        {
+            movementController.isOnPlatform = false;
+            playerRb.gravityScale /= 50;
+        }
     }
 
     private void DirectionCalculate()
