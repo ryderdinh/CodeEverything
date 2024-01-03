@@ -8,6 +8,9 @@ public class MovementController : MonoBehaviour
     public Transform wallCheckpoint;
 
     public LayerMask wallLayer;
+
+    public bool isOnPlatform;
+    public Rigidbody2D platformRb;
     private bool btnPressed;
     private bool isWallTouch;
     private Rigidbody2D rb;
@@ -30,7 +33,12 @@ public class MovementController : MonoBehaviour
     {
         UpdateSpeedMultiplier();
         var targetSpeed = speed * speedMultiplier * relativeTransform.x;
-        rb.velocity = new Vector2(targetSpeed, rb.velocity.y);
+
+        if (isOnPlatform)
+            rb.velocity = new Vector2(targetSpeed + platformRb.velocity.x, rb.velocity.y);
+        else
+            rb.velocity = new Vector2(targetSpeed, rb.velocity.y);
+
 
         isWallTouch = Physics2D.OverlapBox(wallCheckpoint.position, new Vector2(0.06f, 0.7f), 0, wallLayer);
 
