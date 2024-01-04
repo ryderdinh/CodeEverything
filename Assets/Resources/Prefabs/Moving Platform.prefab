@@ -329,7 +329,7 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 40068
+  m_InstanceId: 36916
   m_LocalBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0.5, y: 0.5, z: 0}
@@ -348,7 +348,7 @@ MonoBehaviour:
   speed: 3
   ways: {fileID: 2540169005792668129}
   wayPoints: []
-  waitDuration: 0.1
+  waitDuration: 0.2
 --- !u!1 &8663367269664414942
 GameObject:
   m_ObjectHideFlags: 0
